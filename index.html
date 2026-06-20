@@ -78,6 +78,23 @@
     <figcaption><b>Empty period state.</b> The Day view when a period has no events.</figcaption>
   </figure>
 
+  <h2>Weather <span class="tag">live · NWS</span></h2>
+  <p class="note">A dedicated Weather screen, ported from the trash-day utility — fed live by the
+    service from the US National Weather Service (no API key). Current conditions, the trash-day
+    pickup-window risk (wind / rain severity), active alerts, plus 24-hour hourly and 7-day forecasts.</p>
+  <figure>
+    <img src="images/weather.png" alt="CnSite weather screen">
+    <figcaption><b>Weather.</b> Live NWS data — here a <b>HIGH</b> trash-day alert (96% rain), a Flood
+      Watch, and the hourly/daily outlook. Rendered from the live <code>/api/weather</code> payload.</figcaption>
+  </figure>
+
+  <h2>Live cameras <span class="tag">go2rtc · in-app</span></h2>
+  <p class="note">A Cameras tab shows a live wall — one tile per camera, auto-refreshing. <b>Nest</b>
+    cameras stream a live WebRTC frame via go2rtc; <b>Eufy</b> battery cameras show the latest HomeBase
+    event frame (they don't stream continuously without waking P2P). Verified live against the daemons:
+    the service grabs real frames (Nest ~145&nbsp;KB live JPEG, Eufy ~13&nbsp;KB HomeBase thumb) on
+    <code>/api/snapshot</code>. The wall renders in-app (run the desktop or tablet client to see it).</p>
+
   <h2>Architecture</h2>
   <div class="grid">
     <div class="card"><h3>:server</h3><p>Headless Kotlin service — the single owner of storage, device
