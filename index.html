@@ -87,14 +87,23 @@
     refresh. Verified end-to-end: real Eufy + Nest captures arrived as live frames the moment they were
     written. The clients hold only a URL + token; the service owns the storage, devices, and the stream.</p>
 
-  <h2>Weather <span class="tag">live · NWS</span></h2>
+  <h2>Weather <span class="tag">responsive · NWS</span></h2>
   <p class="note">A dedicated Weather screen, ported from the trash-day utility — fed live by the
-    service from the US National Weather Service (no API key). Current conditions, the trash-day
-    pickup-window risk (wind / rain severity), active alerts, plus 24-hour hourly and 7-day forecasts.</p>
+    service from the US National Weather Service (no API key). A hero with current conditions, the
+    trash-day pickup-window risk (wind / rain severity), active alerts, a scrollable hourly strip and
+    a 7-day grid. Styled with bundled fonts — <b>Weather Icons</b> (OFL) for the condition glyphs and
+    <b>Space Grotesk</b> for the display temperatures — and <b>fully responsive</b>: hero and outlook
+    sit side-by-side on a desktop/landscape surface and stack on a portrait kiosk.</p>
   <figure>
-    <img src="images/weather.png" alt="CnSite weather screen">
-    <figcaption><b>Weather.</b> Live NWS data — here a <b>HIGH</b> trash-day alert (96% rain), a Flood
-      Watch, and the hourly/daily outlook. Rendered from the live <code>/api/weather</code> payload.</figcaption>
+    <img src="images/weather-wide.png" alt="CnSite weather screen — wide layout">
+    <figcaption><b>Weather — wide.</b> Desktop/landscape: hero (Weather-Icons sun glyph + Space-Grotesk
+      74°) beside the <b>HIGH</b> trash-day outlook and a Flood Watch, over an hourly strip and a 7-day
+      card grid. Live <code>/api/weather</code> data.</figcaption>
+  </figure>
+  <figure>
+    <img src="images/weather-narrow.png" alt="CnSite weather screen — narrow layout">
+    <figcaption><b>Weather — narrow.</b> The same screen on a portrait tablet kiosk — everything reflows
+      into a single column; the hourly strip scrolls horizontally.</figcaption>
   </figure>
 
   <h2>Live cameras <span class="tag">go2rtc · in-app</span></h2>
