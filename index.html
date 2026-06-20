@@ -69,14 +69,23 @@
   <figure>
     <img src="images/lanes-week.png" alt="CnSite lanes browser — week view">
     <figcaption><b>Week view.</b> Per-camera lanes (Front Door, Doorbell, Inside&nbsp;C35, Nest Front Yard)
-      with color-coded type badges, clip ▶ markers, and HB/Nest source labels. Rendered headlessly via the
-      Compose UI-test API; thumbnails load from the service <code>/img</code> endpoint when running live.</figcaption>
+      with color-coded type badges, clip ▶ markers, and HB/Nest source labels. The green <b>● LIVE</b>
+      shows the event stream is connected. Rendered headlessly via the Compose UI-test API; thumbnails load
+      from the service <code>/img</code> endpoint when running live.</figcaption>
   </figure>
 
   <figure>
     <img src="images/lanes-empty.png" alt="CnSite lanes browser — empty day">
     <figcaption><b>Empty period state.</b> The Day view when a period has no events.</figcaption>
   </figure>
+
+  <h2>Live events <span class="tag">WebSocket push</span></h2>
+  <p class="note">Capture is real-time and server-driven: the service subscribes to Eufy motion/person/pet
+    events directly (no Home&nbsp;Assistant), writes the HomeBase thumbnail to the archive, and
+    <b>broadcasts the new event over a WebSocket</b> (<code>/api/events/ws</code>). Every connected client —
+    the Windows admin and the Android kiosks — inserts it into the right camera lane <b>instantly</b>, no
+    refresh. Verified end-to-end: real Eufy + Nest captures arrived as live frames the moment they were
+    written. The clients hold only a URL + token; the service owns the storage, devices, and the stream.</p>
 
   <h2>Weather <span class="tag">live · NWS</span></h2>
   <p class="note">A dedicated Weather screen, ported from the trash-day utility — fed live by the
