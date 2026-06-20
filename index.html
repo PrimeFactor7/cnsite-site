@@ -1,0 +1,108 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<title>CnSite — Kotlin Multiplatform smart-home hub</title>
+<style>
+  :root{
+    --bg:#06090f; --panel:#0e141c; --border:#1b2735; --cyan:#22d3ee; --amber:#f59e0b;
+    --tx:#d7e3ec; --dim:#8a9baa; --green:#3fb950; --red:#f85149;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:radial-gradient(1200px 640px at 50% -10%,#0d1722,#06090f) fixed;color:var(--tx);
+    font-family:Inter,'Segoe UI',Roboto,system-ui,sans-serif;line-height:1.55}
+  .wrap{max-width:1040px;margin:0 auto;padding:0 20px 80px}
+  header{padding:54px 0 26px;text-align:center}
+  .logo{display:flex;gap:12px;align-items:center;justify-content:center}
+  .dot{width:15px;height:15px;border-radius:50%;background:var(--cyan);box-shadow:0 0 18px var(--cyan)}
+  h1{font-family:'Space Grotesk',Inter,sans-serif;font-size:46px;letter-spacing:3px;margin:0;color:var(--cyan)}
+  .sub{color:var(--dim);font-size:13px;letter-spacing:3px;text-transform:uppercase;margin-top:6px}
+  .lead{max-width:760px;margin:22px auto 0;color:#c4d2dd;font-size:17px}
+  .badges{display:flex;gap:8px;flex-wrap:wrap;justify-content:center;margin-top:22px}
+  .badge{border:1px solid var(--border);background:var(--panel);border-radius:999px;padding:6px 14px;font-size:13px;color:var(--dim)}
+  .badge b{color:var(--cyan);font-weight:600}
+  h2{font-family:'Space Grotesk',Inter,sans-serif;color:var(--tx);font-size:24px;margin:48px 0 6px;
+    border-bottom:1px solid var(--border);padding-bottom:8px}
+  h2 .tag{color:var(--cyan);font-size:13px;letter-spacing:2px;text-transform:uppercase;margin-left:10px;vertical-align:middle}
+  p.note{color:var(--dim);font-size:15px;margin:6px 0 18px}
+  figure{margin:24px 0;background:var(--panel);border:1px solid var(--border);border-radius:14px;overflow:hidden}
+  figure img{display:block;width:100%;height:auto;border-bottom:1px solid var(--border)}
+  figcaption{padding:12px 16px;color:var(--dim);font-size:14px}
+  figcaption b{color:var(--tx)}
+  .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:16px;margin-top:18px}
+  .card{background:var(--panel);border:1px solid var(--border);border-radius:12px;padding:16px}
+  .card h3{margin:0 0 6px;font-size:15px;color:var(--cyan);font-family:'Space Grotesk',Inter,sans-serif}
+  .card p{margin:0;color:var(--dim);font-size:14px}
+  code{background:#0a0e14;border:1px solid var(--border);border-radius:5px;padding:1px 6px;color:#cfe;font-size:13px}
+  pre{background:#0a0e14;border:1px solid var(--border);border-radius:10px;padding:14px 16px;overflow:auto;color:#cfe;font-size:13px;
+    font-family:'JetBrains Mono',Consolas,monospace}
+  footer{margin-top:60px;border-top:1px solid var(--border);padding-top:20px;color:var(--dim);font-size:13px;text-align:center}
+  a{color:var(--cyan);text-decoration:none} a:hover{text-decoration:underline}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header>
+    <div class="logo"><span class="dot"></span><h1>CnSite</h1></div>
+    <div class="sub">Kotlin Multiplatform smart-home hub</div>
+    <p class="lead">A local, production-grade smart-home hub built as a <b>client–server</b> system in
+      Kotlin&nbsp;Multiplatform + Compose&nbsp;Multiplatform — a standalone Kotlin <b>service</b> plus
+      <b>thin Compose clients</b> for Windows&nbsp;11 and Android wall tablets. Migrated off a customized
+      Home&nbsp;Assistant / Python setup; it owns device control directly (no HA Core).</p>
+    <div class="badges">
+      <span class="badge"><b>Service</b> · Ktor + SQLDelight</span>
+      <span class="badge"><b>UI</b> · Compose MP (Windows + Android)</span>
+      <span class="badge"><b>Devices</b> · Eufy WS + Nest go2rtc</span>
+      <span class="badge"><b>Auth</b> · admin / kiosk roles</span>
+    </div>
+  </header>
+
+  <h2>The Events lanes browser <span class="tag">Compose Multiplatform UI</span></h2>
+  <p class="note">A per-camera <b>history</b> browser: each camera gets a full-width lane; a Day / Week /
+    Month period control navigates the timeline; events render as a wrapped grid of thumbnails with type
+    badges (person · animal · motion), clip markers, timestamps, and capture-source labels. The same UI
+    runs on the Windows desktop (admin) and the Android wall tablets (locked-down kiosk).</p>
+
+  <figure>
+    <img src="images/lanes-week.png" alt="CnSite lanes browser — week view">
+    <figcaption><b>Week view.</b> Per-camera lanes (Front Door, Doorbell, Inside&nbsp;C35, Nest Front Yard)
+      with color-coded type badges, clip ▶ markers, and HB/Nest source labels. Rendered headlessly via the
+      Compose UI-test API; thumbnails load from the service <code>/img</code> endpoint when running live.</figcaption>
+  </figure>
+
+  <figure>
+    <img src="images/lanes-empty.png" alt="CnSite lanes browser — empty day">
+    <figcaption><b>Empty period state.</b> The Day view when a period has no events.</figcaption>
+  </figure>
+
+  <h2>Architecture</h2>
+  <div class="grid">
+    <div class="card"><h3>:server</h3><p>Headless Kotlin service — the single owner of storage, device
+      connectivity, security, and the API. Always-on on the Windows node.</p></div>
+    <div class="card"><h3>:core:database / :media</h3><p>SQLDelight event index + a day-partitioned media
+      store (<code>/events/&lt;day&gt;/&lt;cam&gt;/…</code>); per-camera lane queries.</p></div>
+    <div class="card"><h3>:integrations:eufy / :nest</h3><p>Direct capture: eufy-security-ws (WebSocket,
+      HomeBase thumbnails) + go2rtc (Nest WebRTC frames). No HA Core.</p></div>
+    <div class="card"><h3>:composeApp</h3><p>Thin Compose client (Windows + Android). Renders + commands
+      only — no local DB or device logic. Admin on Windows, viewer on kiosks.</p></div>
+  </div>
+
+  <h2>UI testing <span class="tag">runComposeUiTest</span></h2>
+  <p class="note">The screen is split into a stateless <code>LanesContent</code> that renders from a fixed
+    <code>LaneSet</code>, so UI tests assert layout + reactivity with <b>zero network or hardware</b>. Tests
+    use semantic <code>testTag</code>s and run on both desktop and Android. The desktop runner also captures
+    the screenshots above offscreen (no display needed) — they double as visual-regression baselines.</p>
+  <pre>./gradlew :composeApp:desktopTest          # shared UI assertions + screenshot capture (Windows JVM)
+./gradlew :composeApp:connectedAndroidTest # same assertions on a connected tablet</pre>
+
+  <footer>
+    CnSite — private repo on GitHub. Screenshots generated from the Compose Multiplatform test suite.<br>
+    🤖 Built with Claude Code.
+  </footer>
+
+</div>
+</body>
+</html>
