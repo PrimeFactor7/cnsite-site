@@ -113,17 +113,20 @@
     the service grabs real frames (Nest ~145&nbsp;KB live JPEG, Eufy ~13&nbsp;KB HomeBase thumb) on
     <code>/api/snapshot</code>. The wall renders in-app (run the desktop or tablet client to see it).</p>
 
-  <h2>Lights <span class="tag">Govee · LAN + cloud</span></h2>
-  <p class="note">Full Govee control, ported off the old Home-Assistant light groups. The service speaks
-    the <b>Govee LAN API</b> (UDP — local + instant, no key) with the <b>cloud Developer API</b> as a
-    fallback that reaches every device. Each light gets a card with a power switch, a brightness slider,
-    preset color swatches, a <b>custom hue-strip color picker</b> (Canvas, tap or drag), and Warm / Soft /
-    Cool white-temperature chips. Control is optimistic and available to wall kiosks, not just the admin.</p>
+  <h2>Lights &amp; Sensors <span class="tag">Govee · 89 devices live</span></h2>
+  <p class="note">Full Govee control, ported off the old Home-Assistant light groups — and reusing the
+    same account key, so no re-authentication. The service talks to Govee's <b>cloud Developer API v2</b>
+    (all devices) with a <b>LAN API</b> path (UDP, local + instant) for supported models. It classifies
+    each device: <b>81 controllable lights/plugs</b> get a card with a power switch, brightness slider,
+    preset swatches, a <b>custom hue-strip color picker</b> (Canvas, tap or drag) and Warm/Soft/Cool
+    white-temp chips; <b>8 thermo-hygrometers</b> render as read-only <b>temperature + humidity</b> tiles.
+    Control is optimistic and available to wall kiosks, not just the admin.</p>
   <figure>
-    <img src="images/lights.png" alt="CnSite Lights screen — Govee control">
-    <figcaption><b>Lights.</b> Per-device cards — power, brightness, preset swatches, the custom rainbow
-      hue picker, and white-temp chips — over <code>/api/lights</code> + <code>/api/light</code>. The LAN
-      command codecs are unit-tested; live binding needs per-device LAN Control or a cloud API key.</figcaption>
+    <img src="images/lights.png" alt="CnSite Lights &amp; Sensors screen — Govee">
+    <figcaption><b>Lights &amp; Sensors.</b> Light cards (power, brightness, swatches, the custom rainbow
+      hue picker, white-temp) plus a Sensors row of live temperature/humidity tiles, over
+      <code>/api/lights</code> + <code>/api/light</code>. Verified live against the account: 81 lights + 8
+      sensors with real state.</figcaption>
   </figure>
 
   <h2>Architecture</h2>
