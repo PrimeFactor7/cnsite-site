@@ -116,13 +116,15 @@
     <code>/api/lane</code>); tap any event (here or on the Events page) to view it full-size in a lightbox.</p>
 
   <h2>Lights &amp; Sensors <span class="tag">Govee · 89 devices live</span></h2>
-  <p class="note">Full Govee control, ported off the old Home-Assistant light groups — and reusing the
-    same account key, so no re-authentication. The service talks to Govee's <b>cloud Developer API v2</b>
-    (all devices) with a <b>LAN API</b> path (UDP, local + instant) for supported models. It classifies
-    each device: <b>81 controllable lights/plugs</b> get a card with a power switch, brightness slider,
-    preset swatches, a <b>custom hue-strip color picker</b> (Canvas, tap or drag) and Warm/Soft/Cool
-    white-temp chips; <b>8 thermo-hygrometers</b> render as read-only <b>temperature + humidity</b> tiles.
-    Control is optimistic and available to wall kiosks, not just the admin.</p>
+  <p class="note">Full Govee control, ported off the old Home-Assistant light groups — reusing the same
+    account key (no re-auth). The service speaks Govee's <b>cloud Developer API v2</b> (all devices), and
+    studying the HA <code>goveelife</code> add-in surfaced the nuances that matter: control values are
+    read from each device's own capability <b>parameters</b> (on/off option values, brightness range,
+    color-temp range — clamped), and polling respects the <b>10,000 req/account/day</b> cap. It classifies
+    every device: <b>lights</b> get power, brightness, a <b>custom hue-strip picker</b>, a per-device
+    Kelvin slider, their <b>scenes</b> (e.g. 80 on the curtain lights) and extra <b>toggles</b>
+    (gradient / dream-view / nightlight); <b>plugs</b> get a compact switch; <b>8 thermo-hygrometers</b>
+    render as read-only temperature + humidity tiles. Optimistic, and usable from wall kiosks.</p>
   <figure>
     <img src="images/lights.png" alt="CnSite Lights &amp; Sensors screen — Govee">
     <figcaption><b>Lights &amp; Sensors.</b> Light cards (power, brightness, swatches, the custom rainbow
