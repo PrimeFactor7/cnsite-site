@@ -113,14 +113,27 @@
     the service grabs real frames (Nest ~145&nbsp;KB live JPEG, Eufy ~13&nbsp;KB HomeBase thumb) on
     <code>/api/snapshot</code>. The wall renders in-app (run the desktop or tablet client to see it).</p>
 
+  <h2>Lights <span class="tag">Govee · LAN + cloud</span></h2>
+  <p class="note">Full Govee control, ported off the old Home-Assistant light groups. The service speaks
+    the <b>Govee LAN API</b> (UDP — local + instant, no key) with the <b>cloud Developer API</b> as a
+    fallback that reaches every device. Each light gets a card with a power switch, a brightness slider,
+    preset color swatches, a <b>custom hue-strip color picker</b> (Canvas, tap or drag), and Warm / Soft /
+    Cool white-temperature chips. Control is optimistic and available to wall kiosks, not just the admin.</p>
+  <figure>
+    <img src="images/lights.png" alt="CnSite Lights screen — Govee control">
+    <figcaption><b>Lights.</b> Per-device cards — power, brightness, preset swatches, the custom rainbow
+      hue picker, and white-temp chips — over <code>/api/lights</code> + <code>/api/light</code>. The LAN
+      command codecs are unit-tested; live binding needs per-device LAN Control or a cloud API key.</figcaption>
+  </figure>
+
   <h2>Architecture</h2>
   <div class="grid">
     <div class="card"><h3>:server</h3><p>Headless Kotlin service — the single owner of storage, device
       connectivity, security, and the API. Always-on on the Windows node.</p></div>
     <div class="card"><h3>:core:database / :media</h3><p>SQLDelight event index + a day-partitioned media
       store (<code>/events/&lt;day&gt;/&lt;cam&gt;/…</code>); per-camera lane queries.</p></div>
-    <div class="card"><h3>:integrations:eufy / :nest</h3><p>Direct capture: eufy-security-ws (WebSocket,
-      HomeBase thumbnails) + go2rtc (Nest WebRTC frames). No HA Core.</p></div>
+    <div class="card"><h3>:integrations:*</h3><p>Direct, no HA Core: eufy-security-ws (WebSocket) + go2rtc
+      (Nest WebRTC) for cameras, NWS for weather, and Govee LAN+cloud for lights.</p></div>
     <div class="card"><h3>:composeApp</h3><p>Thin Compose client (Windows + Android). Renders + commands
       only — no local DB or device logic. Admin on Windows, viewer on kiosks.</p></div>
   </div>
