@@ -111,7 +111,9 @@
     cameras stream a live WebRTC frame via go2rtc; <b>Eufy</b> battery cameras show the latest HomeBase
     event frame (they don't stream continuously without waking P2P). Verified live against the daemons:
     the service grabs real frames (Nest ~145&nbsp;KB live JPEG, Eufy ~13&nbsp;KB HomeBase thumb) on
-    <code>/api/snapshot</code>. The wall renders in-app (run the desktop or tablet client to see it).</p>
+    <code>/api/snapshot</code>. The wall renders in-app (run the desktop or tablet client to see it).
+    <b>Tap a camera to expand it</b> — a large live feed plus that camera's event history (last 30 days via
+    <code>/api/lane</code>); tap any event (here or on the Events page) to view it full-size in a lightbox.</p>
 
   <h2>Lights &amp; Sensors <span class="tag">Govee · 89 devices live</span></h2>
   <p class="note">Full Govee control, ported off the old Home-Assistant light groups — and reusing the
